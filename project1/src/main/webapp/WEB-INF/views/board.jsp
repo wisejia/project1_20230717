@@ -5,12 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="./css/menu.css">
 <link rel="stylesheet" href="./css/board.css">
 </head>
 <body>
+<%@ include file="menu.jsp" %>
 	<h1>보드</h1>
-	<img alt="" src="./img/Nf6O4wpPRb.jpg" height="100px">
-	<a href="./index">index로 가기</a>
 	<table>
 		<tr>
 			<th>번호</th>
