@@ -3,10 +3,13 @@ package com.poseidon.pro1;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class BoardController {
@@ -15,7 +18,7 @@ public class BoardController {
 	// Autowired말고 Resource로 연결
 	@Resource(name = "boardService")
 	private BoardService boardService;
-
+	
 	@GetMapping("/board")
 	public String board(Model model) {
 		// 서비스에서 값 가져오기
@@ -45,44 +48,9 @@ public class BoardController {
 	@PostMapping("/write")
 	public String write(HttpServletRequest request) {
 
-		// 사용자가 입력한 데이터 변수에 담기
-		// System.out.println(request.getParameter("title"));
-		// System.out.println(request.getParameter("content"));
-		// System.out.println("=======================");
-
-		// 상대방 ip가져오기 2023-07-19
-		String ip = null; // 192.168.0.0 -> HttpServletRequest가 있어야 합니다.
-		ip = request.getHeader("X-Forwarded-For");
-
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("Proxy-Client-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("WL-Proxy-Client-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("HTTP_CLIENT_IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("X-Real-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("X-RealIP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("REMOTE_ADDR");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getRemoteAddr();
-		}
-
 		BoardDTO dto = new BoardDTO();
 		dto.setBtitle(request.getParameter("title"));
-		dto.setBcontent(ip + request.getParameter("content"));
-		dto.setBip(ip);//얻어온 ip도 저장해서 데이터베이스로 보내겠습니다.
+		dto.setBcontent(request.getParameter("content"));
 		dto.setBwrite("홍길동2");// 이건 임시로 적었습니다. 로그인 추가되면 변경하겠습니다.
 
 		// Service -> DAO -> mybatis-> DB로 보내서 저장하기
@@ -90,5 +58,38 @@ public class BoardController {
 
 		return "redirect:board";// 다시 컨트롤러 지나가기 GET방식으로 갑니다
 	}
+	
+	//삭제가 들어온다면 http://172.30.1.19/delete?bno=150
+	//                   HttpServletRequest의 getParameter();
+	@GetMapping("/delete")
+	public String delete(@RequestParam(value = "bno", required = true, defaultValue = "0") int bno) {
+		//System.out.println("bno : " + bno);
+		//dto
+		BoardDTO dto = new BoardDTO();
+		dto.setBno(bno);
+		//dto.setBwrite(null) 사용자 정보
+		//추후 로그인을 하면 사용자의 정보도 담아서 보냅니다.
+		
+		boardService.delete(dto);
+		
+		return "redirect:board";// 삭제를 완료한 후에 다시 보드로 갑니다.
+	}
+	
+	//내일은 수정하기, 로그인하기 만들겠습니다. 내일은 시험도 있습니다.
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

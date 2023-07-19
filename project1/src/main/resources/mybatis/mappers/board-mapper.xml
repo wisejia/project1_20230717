@@ -21,7 +21,9 @@
 		VALUES (#{btitle }, #{bcontent }, #{bwrite }, #{bip })
 	</insert>
 
-
+	<delete id="delete" parameterType="boardDTO">
+		DELETE FROM board WHERE bno=#{bno}
+	</delete>
 
 
 
