@@ -17,8 +17,8 @@
 
 	<!-- inert는 result가 없습니다 -->
 	<insert id="write" parameterType="boardDTO">
-		INSERT INTO board (btitle, bcontent, bwrite)
-		VALUES (#{btitle }, #{bcontent }, #{bwrite })
+		INSERT INTO board (btitle, bcontent, bwrite, bip)
+		VALUES (#{btitle }, #{bcontent }, #{bwrite }, #{bip })
 	</insert>
 
 

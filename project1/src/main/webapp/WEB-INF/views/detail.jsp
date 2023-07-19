@@ -20,7 +20,7 @@
 			<div class="name">${dto.bwrite }님</div>
 			<div class="like">${dto.blike }</div>
 			<div class="date">${dto.bdate }</div>
-			<div class="ip">아직없음</div>
+			<div class="ip">${dto.bip }</div>
 		</div>
 		<div class="content">${dto.bcontent }</div>
 	</div>

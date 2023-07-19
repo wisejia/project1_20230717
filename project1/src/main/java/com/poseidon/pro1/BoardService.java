@@ -21,7 +21,15 @@ public class BoardService {
 	}
 
 	public BoardDTO detail(String bno) {
-		return boardDAO.detail(bno);
+		BoardDTO dto = boardDAO.detail(bno);
+		//여기서 ip뽑아올 수 있죠?
+		String ip = dto.getBip();
+		//ip 중간에 하트 넣어주실 수 있죠? 172.30.1.19 ---> 172.♡.1.19
+		
+		//그거 다시 ip에 저장하실 수 있죠?
+		dto.setBip(ip);
+		//끝.
+		return dto;
 	}
 
 	//글쓰기입니다.

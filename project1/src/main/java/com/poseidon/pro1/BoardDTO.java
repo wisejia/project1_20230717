@@ -2,7 +2,7 @@ package com.poseidon.pro1;
 
 public class BoardDTO {
 	private int bno, blike;
-	private String btitle, bwrite, bcontent, bdate;
+	private String btitle, bwrite, bcontent, bdate, bip;
 
 	public int getBno() {
 		return bno;
@@ -50,6 +50,14 @@ public class BoardDTO {
 
 	public void setBdate(String bdate) {
 		this.bdate = bdate;
+	}
+
+	public String getBip() {
+		return bip;
+	}
+
+	public void setBip(String bip) {
+		this.bip = bip;
 	}
 
 }

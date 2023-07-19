@@ -49,8 +49,9 @@ public class BoardController {
 		// System.out.println(request.getParameter("title"));
 		// System.out.println(request.getParameter("content"));
 		// System.out.println("=======================");
-		String ip = null;
-		
+
+		// 상대방 ip가져오기 2023-07-19
+		String ip = null; // 192.168.0.0 -> HttpServletRequest가 있어야 합니다.
 		ip = request.getHeader("X-Forwarded-For");
 
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
@@ -77,10 +78,11 @@ public class BoardController {
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getRemoteAddr();
 		}
- 
+
 		BoardDTO dto = new BoardDTO();
 		dto.setBtitle(request.getParameter("title"));
 		dto.setBcontent(ip + request.getParameter("content"));
+		dto.setBip(ip);//얻어온 ip도 저장해서 데이터베이스로 보내겠습니다.
 		dto.setBwrite("홍길동2");// 이건 임시로 적었습니다. 로그인 추가되면 변경하겠습니다.
 
 		// Service -> DAO -> mybatis-> DB로 보내서 저장하기
