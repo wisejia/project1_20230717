@@ -11,6 +11,6 @@
 <body>
 <%@ include file="menu.jsp" %>
 	<h1>index</h1>
-	
+	<%=request.getHeader("User-Agent") %>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.poseidon.pro1;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class BoardController {
@@ -18,6 +21,9 @@ public class BoardController {
 	// Autowired말고 Resource로 연결
 	@Resource(name = "boardService")
 	private BoardService boardService;
+	
+	@Autowired
+	private Util util; //우리가 만든 숫자변환을 사용하기 위해서 객체 연결했어요.
 	
 	@GetMapping("/board")
 	public String board(Model model) {
@@ -31,7 +37,9 @@ public class BoardController {
 	// 파라미터로 들어오는 값 잡기
 	@GetMapping("/detail") // Model은 jsp에 값을 붙이기 위해서 넣었습니다.
 	public String detail(HttpServletRequest request, Model model) {
-		String bno = request.getParameter("bno");
+		//String bno = request.getParameter("bno");
+		int bno = util.strToInt(request.getParameter("bno"));
+		
 		// bno에 요청하는 값이 있습니다. 이 값을 db까지 보내겠습니다.
 		// System.out.println("bno : " + bno);
 		BoardDTO dto = boardService.detail(bno);
@@ -76,11 +84,31 @@ public class BoardController {
 	}
 	
 	//내일은 수정하기, 로그인하기 만들겠습니다. 내일은 시험도 있습니다.
+	@GetMapping("/edit")
+	public ModelAndView edit(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("edit");//edit.jsp
+		//데이터베이스에 bno를 보내서 dto를 얻어옵니다.
+		BoardDTO dto = boardService.detail(util.strToInt(request.getParameter("bno")));
+		//mv에 실어보냅니다.
+		mv.addObject("dto", dto);
+		return mv;
+	}
+	
+	@PostMapping("/edit")
+	public String edit(BoardDTO dto) {
+		//System.out.println("map : " + map);
+		//System.out.println(dto.getBtitle());
+		//System.out.println(dto.getBcontent());
+		//System.out.println(dto.getBno());
+		
+		boardService.edit(dto);
+		
+		return "redirect:detail?bno="+dto.getBno(); // 보드로 이동하게 해주세요
+	}
 	
 	
-	
-	
-	
+	// 내일은 로그인, 보드+사용자정보 게시판 연동
+	// CRUD 수정을 합니다.
 	
 	
 	
