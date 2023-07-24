@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상세보기</title>
 <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="./img/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="./css/menu.css">
@@ -32,10 +33,13 @@
 	<div class="detail-content">
 		<div class="title">
 			${dto.bno } / ${dto.btitle }
+			<c:if test="${sessionScope.mid ne null && sessionScope.mid eq dto.m_id}">
 			<img alt="" src="./img/edit.png" onclick="edit()">&nbsp;<img alt="" src="./img/delete.png" onclick="del()">
+			</c:if>
+		
 		</div>
 		<div class="name-bar">
-			<div class="name">${dto.bwrite }님</div>
+			<div class="name">${dto.m_name }님</div>
 			<div class="like">${dto.blike }</div>
 			<div class="date">${dto.bdate }</div>
 			<div class="ip">${dto.bip }</div>

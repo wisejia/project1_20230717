@@ -6,6 +6,7 @@
 			<li onclick="link('board')">게시판</li>
 			<li onclick="link('board2')">게시판2</li>
 			<li onclick="link('mooni')">문의사항</li>
+			<li onclick="link('team')">팀뽑기</li>
 			<li onclick="link('notice')">공지</li>
 				
 			<c:choose>
