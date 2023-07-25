@@ -89,15 +89,17 @@ public class BoardController {
 	//삭제가 들어온다면 http://172.30.1.19/delete?bno=150
 	//                   HttpServletRequest의 getParameter();
 	@GetMapping("/delete")
-	public String delete(@RequestParam(value = "bno", required = true, defaultValue = "0") int bno) {
-		//System.out.println("bno : " + bno);
-		//dto
+	public String delete(@RequestParam(value = "bno", required = true, defaultValue = "0") int bno, HttpSession session) {
+		//로그인 여부 확인해주세요.
+		//System.out.println("mid : " + session.getAttribute("mid"));
+		
 		BoardDTO dto = new BoardDTO();
 		dto.setBno(bno);
+		dto.setM_id((String) session.getAttribute("mid"));
 		//dto.setBwrite(null) 사용자 정보
 		//추후 로그인을 하면 사용자의 정보도 담아서 보냅니다.
 		
-		boardService.delete(dto);
+		boardService.delete(dto);//이거 임시로 막았어요. id확인 하시고 풀어주셔야 합니다.
 		
 		return "redirect:board";// 삭제를 완료한 후에 다시 보드로 갑니다.
 	}
@@ -105,24 +107,31 @@ public class BoardController {
 	//내일은 수정하기, 로그인하기 만들겠습니다. 내일은 시험도 있습니다.
 	@GetMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request) {
-		
+		//로그인 하지 않으면 로그인 화면으로 던져주세요.
 		HttpSession session = request.getSession();
-		
-		ModelAndView mv = new ModelAndView("edit");//edit.jsp
-		
-		//dto를 하나 만들어서 거기에 담겠습니다. = bno, mid
-		BoardDTO dto = new BoardDTO();
-		dto.setBno(util.strToInt(request.getParameter("bno")));
-		//내글만 수정할 수 있도록 세션에 있는 mid도 보냅니다.
-		dto.setM_id((String)session.getAttribute("mid"));
+		ModelAndView mv = new ModelAndView();//jsp 값을 비웁니다.
 
-		
-		//데이터베이스에 bno를 보내서 dto를 얻어옵니다.
-		BoardDTO result =boardService.detail(dto);
-		
-		
-		//mv에 실어보냅니다.
-		mv.addObject("dto", result);
+		if(session.getAttribute("mid") != null) {
+			//dto를 하나 만들어서 거기에 담겠습니다. = bno, mid
+			BoardDTO dto = new BoardDTO();
+			dto.setBno(util.strToInt(request.getParameter("bno")));
+			//내글만 수정할 수 있도록 세션에 있는 mid도 보냅니다.
+			dto.setM_id((String)session.getAttribute("mid"));
+
+			//데이터베이스에 bno를 보내서 dto를 얻어옵니다.
+			BoardDTO result = boardService.detail(dto);
+			//System.out.println("result : " + result);
+			if(result != null) { //내 글을 수정했습니다.
+				mv.addObject("dto", result);//mv에 실어보냅니다.
+				mv.setViewName("edit");//이동할 jsp명을 적어줍니다.				
+			} else {//다른 사람 글이라면 null입니다. 경고창으로 이동합니다.
+				mv.setViewName("warning");
+			}
+			
+		}else{
+			//로그인 안 했다. = login컨트롤러
+			mv.setViewName("redirect:/login");
+		}
 		return mv;
 	}
 	

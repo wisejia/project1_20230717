@@ -15,8 +15,10 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	
+	<!-- 저장소 만들기 -->
 	
 	<dependencies>
+		<!-- 전자정부 페이징 가져오기 -->
 
 		<!-- https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api -->
 		<dependency>

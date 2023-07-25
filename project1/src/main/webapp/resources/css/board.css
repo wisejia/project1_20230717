@@ -3,9 +3,12 @@
 table{
 	margin:0 auto;
 	width: 800px;
-	height: 500px;
+	height: auto;
 	border-collapse: collapse;
 }
+tr{
+	height: 30px;
+	}
 th{
 	height:50px;
 	background-color: gray;
