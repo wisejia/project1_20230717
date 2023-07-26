@@ -6,5 +6,6 @@
 	<typeAliases>
 		<typeAlias type="com.poseidon.pro1.BoardDTO" alias="boardDTO"/>		
 		<typeAlias type="com.poseidon.pro1.LoginDTO" alias="loginDTO"/>
+		<typeAlias type="com.poseidon.pro1.PageDTO" alias="pageDTO"/>
 	</typeAliases>
 </configuration>
