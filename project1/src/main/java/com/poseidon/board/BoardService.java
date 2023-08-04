@@ -1,4 +1,4 @@
-package com.poseidon.pro1;
+package com.poseidon.board;
 
 import java.util.List;
 
@@ -7,6 +7,8 @@ import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.poseidon.util.Util;
 
 @Service("boardService")
 public class BoardService {

@@ -1,11 +1,9 @@
-package com.poseidon.pro1;
+package com.poseidon.team;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import javax.servlet.RequestDispatcher;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

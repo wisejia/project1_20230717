@@ -24,7 +24,7 @@
 		<form action="./write" method="post">
 			<input type="text" name="title">
 			<textarea id="summernote" name="content"></textarea>
-			<button class="btn100" type="submit">글쓰기</button>
+			<button class="btn100 btn btn-primary" type="submit">글쓰기</button>
 		</form>
 		<!-- type="submit" => 제출버튼. 폼데이터로 데이터 전송 -->
 	</div>
@@ -32,7 +32,7 @@
 <script type="text/javascript">
 /* JQuery문법 : 문서가 모두 로딩되었다면, 익명함수를 실행하세요  */
 /* textarea에 서머노트를 실행해주세요.  */
-	$(document).ready(function() {
+	$(function() {
 	  $('#summernote').summernote({
 		  height: 400
 	  });

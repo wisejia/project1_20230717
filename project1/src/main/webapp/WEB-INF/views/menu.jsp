@@ -8,6 +8,7 @@
 			<li onclick="link('mooni')">문의사항</li>
 			<li onclick="link('team')">팀뽑기</li>
 			<li onclick="link('notice')">공지</li>
+			<li onclick="link('members')">회원리스트</li>
 				
 			<c:choose>
 				<c:when test="${sessionScope.mname eq null}">

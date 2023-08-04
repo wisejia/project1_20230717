@@ -1,4 +1,4 @@
-package com.poseidon.pro1;
+package com.poseidon.board;
 //롬복 lombok
 public class PageDTO {
 	private int firstRecordIndex, recordCountPerPage;

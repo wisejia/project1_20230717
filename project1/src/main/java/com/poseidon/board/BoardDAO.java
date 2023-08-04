@@ -1,4 +1,4 @@
-package com.poseidon.pro1;
+package com.poseidon.board;
 
 import java.util.List;
 

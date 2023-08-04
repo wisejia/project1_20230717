@@ -1,6 +1,7 @@
-package com.poseidon.pro1;
+package com.poseidon.board;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.poseidon.util.Util;
 
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -105,7 +108,8 @@ public class BoardController {
 			// 세션에서 불러오겠습니다.
 			dto.setM_id((String) session.getAttribute("mid"));// 세션에서 가져옴
 			// dto.setM_name((String) session.getAttribute("mname"));//세션에서 가져옴
-
+			dto.setUuid(UUID.randomUUID().toString());
+						
 			// Service -> DAO -> mybatis-> DB로 보내서 저장하기
 			boardService.write(dto);
 
