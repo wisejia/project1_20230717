@@ -29,9 +29,10 @@
 		VALUES (#{btitle }, #{bcontent }, (SELECT m_no FROM members WHERE m_id=#{m_id }), #{bip }, #{uuid })
 	</insert>
 
-	<delete id="delete" parameterType="boardDTO">
-		DELETE FROM board WHERE bno=#{bno } AND m_no=(SELECT m_no FROM members WHERE m_id=#{m_id })
-	</delete>
+	<update id="delete" parameterType="boardDTO">
+		UPDATE board SET bdel=0 
+		WHERE bno=#{bno } AND m_no=(SELECT m_no FROM members WHERE m_id=#{m_id })  
+	</update>
 
 	<update id="edit" parameterType="boardDTO">
 		UPDATE board SET btitle=#{btitle }, bcontent=#{bcontent }
@@ -43,5 +44,30 @@
 		UPDATE board SET blike = blike + 1
 		WHERE bno=#{bno }
 	</update>
+	
+	
+	<select id="commentsList" parameterType="Integer" resultType="Map">
+		SELECT * FROM commentsview WHERE bno=#{bno }
+	</select>
+	
+	<update id="cdel" parameterType="Map">
+		UPDATE comments SET c_del=0 
+		WHERE bno=#{bno } AND c_no=#{cno } AND m_no=(SELECT m_no FROM members WHERE m_id=#{mid })
+	</update>
+	
+	<update id="cedit" parameterType="Map">
+		UPDATE comments SET c_comment=#{recomment }
+		WHERE bno=#{bno } AND c_no=#{cno } AND m_no=(SELECT m_no FROM members WHERE m_id=#{mid })
+	</update>
+
+
+
+
+
+
+
+
+
+
 
 </mapper>

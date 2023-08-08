@@ -53,5 +53,8 @@ tr:hover {
 	background-color: gray;
 }
 
-
+span {
+	color: red;
+	font-weight: bold;
+}
 

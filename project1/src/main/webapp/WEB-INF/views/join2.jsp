@@ -20,7 +20,7 @@
 			id.focus();
 		}
 		//요청을 초기화하면서 요청 방식, 주소, 동기화 여부 지정
-		xhr.open("POST", "./checkID?id="+id.value, true);
+		xhr.open("POST", "./checkID2?id="+id.value, true);
 		xhr.onreadystatechange = viewMessage;
 		xhr.send();
 		return false;
@@ -30,11 +30,17 @@
 		if (xhr.readyState == 4) {
 			if (xhr.status == 200) {
 				var str = xhr.responseText;
-				console.log(str);
-				//resultMSG.append(str.result);
+				if(str == 1){
+					str = "이미 가입되어 있습니다.";
+					document.getElementById("resultMSG").style.color = "red";//색변경
+				} else {
+					str = "가입할 수 있습니다. 계속 진행하세요.";				
+					document.getElementById("resultMSG").style.color = "green"; //색변경
+				}
+					document.getElementById("resultMSG").innerHTML = str;
 			}
 		} else {
-			//resultMSG.append("error");
+			document.getElementById("resultMSG").innerHTML = "에러가 발생했습니다. 다시 시도하세요.";
 		}
 
 	return false;
@@ -45,7 +51,7 @@
 	<%@ include file="menu.jsp"%>
 	<div class="join-div">
 		<form action="./join" method="post" onsubmit="return false">
-			<h1>회원가입</h1>
+			<h1>회원가입2</h1>
 			<hr>
 			<div class="label-row">
 				<div class="label-name">아이디</div>

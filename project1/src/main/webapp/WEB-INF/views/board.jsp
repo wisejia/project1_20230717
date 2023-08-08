@@ -10,7 +10,7 @@
 <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="./img/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="./css/menu.css">
-<link rel="stylesheet" href="./css/board.css">
+<link rel="stylesheet" href="./css/board.css?version=10">
 <script type="text/javascript">
 	function linkPage(pageNo){
 		location.href = "./board?pageNo="+pageNo;
@@ -36,7 +36,11 @@
 		<c:forEach items="${list }" var="row">
 			<tr onclick="location.href='./detail?bno=${row.bno }'">
 				<td class="td1">${row.bno }</td>
-				<td class="title">${row.btitle }</td>
+				<td class="title">${row.btitle }
+					<span>
+						<c:if test="${row.commentcount ne 0 }">(${row.commentcount })</c:if>
+					</span>
+				</td>
 				<td class="td1">${row.m_name }</td>
 				<td class="td2">${row.bdate }</td>
 				<td class="td1">${row.blike }</td>

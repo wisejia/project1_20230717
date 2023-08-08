@@ -1,6 +1,7 @@
 package com.poseidon.board;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -81,6 +82,12 @@ public class BoardController {
 		// dto.setM_id(null); 글 상세보기에서는 mid가 없어도 됩니다.
 
 		BoardDTO result = boardService.detail(dto);
+		//System.out.println(result.getCommentcount());
+		if(result.getCommentcount() > 0) {
+			//데이터베이스에 물어봐서 jsp로 보냅니다.
+			List<Map<String, Object>> commentsList = boardService.commentsList(bno);
+			model.addAttribute("commentsList", commentsList);
+		}
 		model.addAttribute("dto", result);
 
 		return "detail";
@@ -183,7 +190,43 @@ public class BoardController {
 		return "redirect:detail?bno=" + dto.getBno(); // 보드로 이동하게 해주세요
 	}
 
-	// 내일은 로그인, 보드+사용자정보 게시판 연동
-	// CRUD 수정을 합니다.
-
+	//2023-08-07 입추, 프레임워크 프로그래밍	
+	@GetMapping("/cdel") //bno, cno
+	public String cdel(@RequestParam Map<String, Object> map, HttpSession session) {
+		//로그인여부 검사
+		if(session.getAttribute("mid") != null) {
+			//값 들어왔는지 여부 검사
+			if(map.containsKey("bno") && map.get("cno") != null &&
+				!(map.get("bno").equals("")) && !(map.get("cno").equals("")) &&
+				util.isNum(map.get("bno")) && util.isNum(map.get("cno"))) {
+				
+				//System.out.println("여기로 들어왔습니다.");
+				map.put("mid", session.getAttribute("mid"));
+				int result = boardService.cdel(map);
+				System.out.println("삭제 결과 : " + result);
+			}
+			
+		}
+		return "redirect:/detail?bno="+map.get("bno");
+	}
+	
+	
+	//{recomment=댓글을 씁니다, bno=216, cno=76}
+	@PostMapping("/cedit")
+	public String cedit(@RequestParam Map<String, Object> map, HttpSession session) {
+		if(session.getAttribute("mid") != null) {
+			if(map.get("bno") != null && !(map.get("bno").equals("")) && 
+				map.containsKey("cno") && !(map.get("cno").equals(""))   ) {
+				map.put("mid", session.getAttribute("mid"));
+				System.out.println(map);
+				int result = boardService.cedit(map);
+				System.out.println(result);
+				return "redirect:/detail?bno="+map.get("bno");				
+			}else {
+				return "redirect:/board";
+			}
+		}else {
+			return "redirect:/login";
+		}
+	}
 }
